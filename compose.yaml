@@ -1,0 +1,8 @@
+services:
+  backend-primary:
+    container_name: webservice-backend
+    build:
+      context: .
+      dockerfile: container/backend.Dockerfile
+    ports:
+      - 8080:8080

@@ -8,10 +8,20 @@ run:
 	uv run python app.py
 
 # Build Docker image
-build-docker:
+build:
 	@echo "Building docker image..."
-	docker build -t fizzbuzz-api:latest -f ./Dockerfile .
+	docker compose build
 	@echo "Docker image built successfully!"
+
+# Start Docker containers
+start:
+    @echo "Starting API in Docker container..."
+    docker compose up
+
+# Shut down Docker containers
+stop:
+    @echo "Stopping API in Docker container..."
+    docker compose down
 
 # Clean unused files
 clean:
