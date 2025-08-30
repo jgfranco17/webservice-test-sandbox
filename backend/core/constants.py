@@ -1,0 +1,4 @@
+from typing import Final
+
+DEFAULT_HOST: Final[str] = "0.0.0.0"
+DEFAULT_PORT: Final[int] = 8080
