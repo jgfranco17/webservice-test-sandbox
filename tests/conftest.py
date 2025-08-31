@@ -5,6 +5,7 @@ from fastapi.testclient import TestClient
 from requests import Session
 
 from backend.service import app
+from tests.testutils.client import ServiceClient
 
 
 @pytest.fixture
@@ -20,11 +21,10 @@ def service_url() -> str:
 
 
 @pytest.fixture
-def service_client(service_url: str) -> Iterator[Session]:
+def service_client(service_url: str) -> Iterator[ServiceClient]:
     """
     Fixture that provides a configured requests.Session
     pointing to the FastAPI service.
     """
-    session = Session()
-    session.headers.update({"Accept": "application/json"})
-    yield session
+    client = ServiceClient(service_url)
+    yield client
