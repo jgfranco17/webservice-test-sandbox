@@ -11,6 +11,9 @@ dependencies = [
     "uvicorn>=0.35.0",
 ]
 
+[tool.setuptools.packages.find]
+exclude = ["frontend*", "container*", "tests*"]
+
 [dependency-groups]
 dev = [
     "black>=25.1.0",
