@@ -2,26 +2,42 @@
 default:
 	@just --list
 
-# Launch API in debug mode
-run:
-	@echo "Running main app..."
-	uv run python app.py
+# Install dependencies
+install:
+	@echo "Installing dependencies..."
+	uv sync --all-extras
+	npm install
 
 # Build Docker image
 build:
-	@echo "Building docker image..."
+	@echo "Building docker images..."
 	docker compose build
-	@echo "Docker image built successfully!"
+	@echo "Docker images built successfully!"
 
 # Start Docker containers
 start:
-    @echo "Starting API in Docker container..."
-    docker compose up
+	@echo "Starting services in Docker containers..."
+	docker compose up
 
 # Shut down Docker containers
 stop:
-    @echo "Stopping API in Docker container..."
-    docker compose down
+	@echo "Stopping Docker containers..."
+	docker compose down
+
+# Launch backend API (development)
+run-backend:
+	@echo "Running backend API in development mode..."
+	uv run python app.py
+
+# Launch frontend (development)
+run-frontend:
+	@echo "Running frontend in development mode..."
+	npm run dev
+
+# View Docker logs
+logs:
+	@echo "Viewing Docker logs..."
+	docker compose logs -f
 
 # Clean unused files
 clean:
@@ -39,9 +55,11 @@ clean:
 	-@rm -rf .tox/
 	-@rm -rf docs/_build
 	-@rm -rf .venv
+	-@rm -rf node_modules
+	-@rm -rf .next
 	@echo "Cleaned out unused files and directories!"
 
-# Run PyTest unit tests
+# Run PyTest unit tests (legacy command)
 pytest *args:
 	@echo "Running unittest suite..."
-	poetry run pytest {{ args }}
+	pytest {{ args }}
