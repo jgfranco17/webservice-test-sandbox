@@ -6,3 +6,17 @@ services:
       dockerfile: container/backend.Dockerfile
     ports:
       - 8080:8080
+    environment:
+      - SANBOX_SERVER_PORT=8080
+
+  frontend:
+    container_name: webservice-frontend
+    build:
+      context: .
+      dockerfile: container/frontend.Dockerfile
+    ports:
+      - 3000:3000
+    depends_on:
+      - backend-primary
+    environment:
+      - NEXT_PUBLIC_API_URL=http://backend-primary:8080

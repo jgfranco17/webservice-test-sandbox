@@ -1,0 +1,42 @@
+name: Testing
+
+on:
+  push:
+    branches:
+      - "main"
+  pull_request:
+    branches:
+      - "**"
+
+permissions:
+  contents: read
+
+jobs:
+  unit-tests:
+    name: Run unit test suite
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup workspace
+        uses: ./.github/actions/setup-workspace
+
+      - name: Run tests with coverage
+        run: |
+          uv run coverage run \
+            --source=backend \
+            --omit="*/__*.py,*/test_*.py,/tmp/*" \
+            -m pytest -vv
+          uv run coverage report > coverage.txt
+
+      - name: Create GHA job summary
+        if: success() || failure()
+        run: |
+          TIMESTAMP=$(date +"%Y-%m-%d %H:%M:%S")
+          echo "# Unit Testing Report (Backend)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## Pytest coverage" >> $GITHUB_STEP_SUMMARY
+          echo '```text' >> $GITHUB_STEP_SUMMARY
+          cat coverage.txt >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY

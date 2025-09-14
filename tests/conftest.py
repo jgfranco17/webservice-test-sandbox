@@ -1,30 +1,18 @@
-from typing import Iterator
-
 import pytest
 from fastapi.testclient import TestClient
-from requests import Session
 
 from backend.service import app
+from tests.testutils.client import InternalClient
+from tests.testutils.config import BACKEND_SERVICE_URL
 
 
 @pytest.fixture
-def client() -> TestClient:
-    """Create a direct client to run against the app."""
+def backend_client() -> TestClient:
+    """Create a test client for the backend API."""
     return TestClient(app)
 
 
-@pytest.fixture
-def service_url() -> str:
-    """Get the address of the running webservice."""
-    return "http://localhost:8080"
-
-
-@pytest.fixture
-def service_client(service_url: str) -> Iterator[Session]:
-    """
-    Fixture that provides a configured requests.Session
-    pointing to the FastAPI service.
-    """
-    session = Session()
-    session.headers.update({"Accept": "application/json"})
-    yield session
+@pytest.fixture(scope="session")
+def live_backend_client() -> InternalClient:
+    """Create a test client for the live instance of the backend."""
+    return InternalClient(BACKEND_SERVICE_URL)
