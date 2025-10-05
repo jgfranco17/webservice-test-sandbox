@@ -3,17 +3,6 @@ from behave import *  # type: ignore
 from tests.shared.stubs import TestContext
 
 
-@when("I try: {step}")
-def step_try_step(context: TestContext, step: str):
-    """Executes a step safely and captures any Exception raised."""
-    try:
-        context.execute_steps(step)
-        context.last_exception = None
-    except Exception as e:
-        # Capture the exception for later assertions
-        context.last_exception = e
-
-
 @then("no error is raised")
 def step_no_error(context: TestContext):
     """Verifies that no error was raised in the last 'try' step."""
