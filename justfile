@@ -41,7 +41,12 @@ clean:
 	-@rm -rf .venv
 	@echo "Cleaned out unused files and directories!"
 
-# Run PyTest unit tests
+# Run Pytest unit tests
 pytest *args:
 	@echo "Running unittest suite..."
-	poetry run pytest {{ args }}
+	uv run pytest {{ args }}
+
+# Run Behave BDD tests
+behave *args:
+    @echo "Running BDD test suite..."
+    uv run behave tests/features {{ args }}

@@ -5,8 +5,10 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
+    "behave==1.2.6",
     "fastapi>=0.116.1",
     "httpx>=0.28.1",
+    "pytest>=8.4.2",
     "requests>=2.32.5",
     "uvicorn>=0.35.0",
 ]
@@ -16,5 +18,4 @@ dev = [
     "black>=25.1.0",
     "coverage>=7.10.6",
     "pre-commit>=4.3.0",
-    "pytest>=8.4.1",
 ]
