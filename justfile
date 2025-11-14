@@ -1,11 +1,21 @@
 # List out available commands
 default:
-	@just --list
+	@just --list --unsorted
 
 # Launch API in debug mode
 run:
 	@echo "Running main app..."
 	@uv run python app.py
+
+# Run Pytest
+pytest *args:
+	@uv run pytest {{ args }}
+
+# Run Pytest integration tests
+integration-test *args:
+    #!/usr/bin/env bash
+    export RUN_INTEGRATION="true"
+    uv run pytest {{ args }}
 
 # Build Docker image
 build:
@@ -40,8 +50,3 @@ clean:
 	-@rm -rf docs/_build
 	-@rm -rf .venv
 	@echo "Cleaned out unused files and directories!"
-
-# Run PyTest unit tests
-pytest *args:
-	@echo "Running unittest suite..."
-	poetry run pytest {{ args }}

@@ -1,4 +1,3 @@
-import pytest
 from requests import Session
 
 from tests.testutils.conditions import integration_test
