@@ -4,10 +4,11 @@ from http import HTTPStatus
 from time import perf_counter
 from typing import Any, Dict
 
-from fastapi import FastAPI, HTTPException, Request
+from fastapi import APIRouter, FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse
 
 from backend.core.types import StandardJsonResponse
+from backend.routes.v0 import router_v0
 
 logger = logging.getLogger(__name__)
 
@@ -18,6 +19,12 @@ app = FastAPI(
     version="0.0.0",
 )
 startup_time = perf_counter()
+
+
+api_routes = APIRouter(prefix="/api", tags=["V0"])
+api_routes.include_router(router_v0)
+
+app.include_router(api_routes)
 
 
 @app.get("/", status_code=HTTPStatus.OK, tags=["SYSTEM"])

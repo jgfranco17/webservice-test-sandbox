@@ -5,7 +5,7 @@ default:
 # Launch API in debug mode
 run:
 	@echo "Running main app..."
-	uv run python app.py
+	@uv run python app.py
 
 # Build Docker image
 build:

@@ -1,3 +1,3 @@
 from typing import Any, Dict
 
-StandardJsonResponse = Dict[str, Any]
+StandardJsonResponse = Dict[str, object]
